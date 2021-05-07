@@ -3,25 +3,25 @@
 class Product
 {
   /**
-   * Properties
+   * Fields
    */
   private $id;
   private $title;
   private $description;
+  private $size;
   private $image;
   private $price;
   private $category;
 
-  public static $fixedCategories = array("landscape", "animal");
-
   /**
    * Constructor
    */
-  public function __construct($id, $title, $description, $image, $price, $category)
+  public function __construct($id, $title, $description, $size, $image, $price, $category)
   {
     $this->id = $id;
     $this->title = $title;
     $this->description = $description;
+    $this->size = $size;
     $this->image = $image;
     $this->price = $price;
     $this->category = $category;
@@ -36,6 +36,7 @@ class Product
       "id" => $this->id,
       "title" => $this->title,
       "description" => $this->description,
+      "size" => $this->size,
       "image" => $this->image,
       "price" => $this->price,
       "category" => $this->category
@@ -70,7 +71,7 @@ class Product
   /**
    * Checks category in querystring
    */
-  public static function getCategory($array){
+  public static function getCategory($array, $fixedCategories){
     $category = $_GET['category'] ?? null;
 
     $categoryArray = array();
@@ -82,7 +83,7 @@ class Product
         }
       }
       //if chosen category doesn't exist in $fixedCategories, push error message in array
-      if(!in_array($categoryArray, self::$fixedCategories) && count($categoryArray)===0){
+      if(!in_array($categoryArray, $fixedCategories) && count($categoryArray)===0){
         $categoryArray =  array("Error"=>"Category not found");
       }
     }
